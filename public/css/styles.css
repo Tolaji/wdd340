@@ -37,7 +37,8 @@
     justify-content: space-between;
     gap: 1.5rem;
     padding: 10px 20px;
-    background-color: #333;
+    color: #ffd4b8;
+    background-color: #2d3142;
   }
   
   .navbar-container li a {
@@ -49,7 +50,7 @@
   }
   
   .navbar-container li a:hover {
-    color: #007BFF;
+    color: #a846a0;
   }
   
   /* Hamburger menu styles */
@@ -66,7 +67,7 @@
   .hamburger div {
     width: 35px;
     height: 5px;
-    background-color: red;
+    background-color: #2d3142;
     margin: 3px 0;
     transition: 0.4s;
   }
