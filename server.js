@@ -29,7 +29,7 @@ app.set("layout", "layouts/layout") // not as views root
  *************************/
 app.use(static)
 // Index route
-app.get("/", baseController.buildHome)
+app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", inventoryRoute)
 
@@ -62,19 +62,6 @@ app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
 
-// Generic error handler
-app.use(async (err, req, res, next) => {
-  console.error("Error at:", req.originalUrl);
-  console.error(err.stack);
-  res.status(500).render("errors/error", { error: err });
-});
-
-// // 404 handler
-// app.use(async (req, res, next) => {
-//   res.status(404).render("errors/404");
-// });
-
-
 /* ***********************
 * Express Error Handler
 * Place after all other middleware
@@ -82,12 +69,13 @@ app.use(async (err, req, res, next) => {
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  res.render("errors/error", {
+  res.status(err.status || 500).render("errors/error", {
     title: err.status || 'Server Error',
-    message: err.message,
-    nav
+    nav,
+    error: err
   })
 })
+
 
 /* ***********************
  * Local Server Information
