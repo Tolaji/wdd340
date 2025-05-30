@@ -1,0 +1,60 @@
+/* error.css */
+
+/* body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+} */
+
+main.error-page {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+main.error-page h1 {
+  font-size: 3rem;
+  color: #e63946;
+  margin-bottom: 1rem;
+}
+
+main.error-page p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin-bottom: 1.5rem;
+}
+
+main.error-page pre {
+  background-color: #f1f1f1;
+  padding: 1rem;
+  border-left: 4px solid #e63946;
+  color: #555;
+  font-size: 0.95rem;
+  overflow-x: auto;
+  max-width: 90%;
+  margin: 1rem auto;
+  border-radius: 5px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  background-color: #457b9d;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #1d3557;
+}
