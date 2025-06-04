@@ -9,10 +9,15 @@ const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
+const path = require("path")
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/index")
+const errorHandler = require("./utilities/errorHandler")
+
+
+
 
 
 /* ***********************
@@ -27,9 +32,14 @@ app.set("layout", "layouts/layout") // not as views root
 /* ***********************
 * Routes
  *************************/
-app.use(static)
+app.use('/',static) // Static files middleware
+
+
+
+
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
+
 // Inventory routes
 app.use("/inv", inventoryRoute)
 
@@ -66,16 +76,8 @@ app.use(async (req, res, next) => {
 * Express Error Handler
 * Place after all other middleware
 *************************/
-app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav()
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  res.status(err.status || 500).render("errors/error", {
-    title: err.status || 'Server Error',
-    nav,
-    error: err
-  })
-})
-
+// Use global error handler
+app.use(errorHandler)
 
 /* ***********************
  * Local Server Information

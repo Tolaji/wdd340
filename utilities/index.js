@@ -58,6 +58,39 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+
+Util.buildDetailView = function (vehicle) {
+  return `
+    <section class="vehicle-detail">
+      <div class="vehicle-image">
+        <h1>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}</h1>
+        <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}" />
+        <div class="cert-badge">Enterprise Certified</div>
+      </div>
+      <div class="vehicle-info">
+        <div><strong>Price:</strong> $${new Intl.NumberFormat('en-US').format(vehicle.inv_price)}</div>
+        <div><strong>Mileage:</strong> ${new Intl.NumberFormat('en-US').format(vehicle.inv_miles)} miles</div>
+        <ul class="vehicle-meta">
+          <li><strong>Transmission:</strong> ${vehicle.inv_transmission}</li>
+          <li><strong>Drivetrain:</strong> ${vehicle.inv_drivetrain}</li>
+          <li><strong>Fuel Type:</strong> ${vehicle.inv_fuel}</li>
+          <li><strong>Color:</strong> ${vehicle.inv_color}</li>
+          <li><strong>VIN:</strong> ${vehicle.inv_vin}</li>
+        </ul>
+        <div class="vehicle-description">
+          <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+        </div>
+        <div class="vehicle-actions">
+          <button class="primary">Start My Purchase</button>
+          <button>Contact Us</button>
+          <button>Schedule Test Drive</button>
+          <button>Apply for Financing</button>
+        </div>
+      </div>
+    </section>
+  `
+}
+
 /* ****************************************
  * Middleware For Handling Errors
  * Wrap other function in this for 

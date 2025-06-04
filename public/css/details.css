@@ -1,0 +1,132 @@
+.vehicle-detail {
+  display: flex;
+  flex-wrap: wrap;
+  background: #f9f9f9;
+  padding: 32px;
+  border-radius: 10px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+  gap: 32px;
+  max-width: 1100px;
+  margin: 40px auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.vehicle-image {
+  flex: 1 1 50%;
+  position: relative;
+}
+
+.vehicle-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cert-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: #0d6839;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.vehicle-info {
+  flex: 1 1 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.vehicle-info h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0;
+  color: #333;
+}
+
+.price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-top: -10px;
+}
+
+.mileage-box {
+  background: #eef2f3;
+  padding: 6px 12px;
+  border-radius: 6px;
+  width: fit-content;
+  font-weight: 500;
+}
+
+.vehicle-meta {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.vehicle-meta li {
+  font-size: 1rem;
+  padding: 4px 0;
+}
+
+.vehicle-meta strong {
+  display: inline-block;
+  width: 110px;
+  color: #444;
+}
+
+.vehicle-description {
+  font-size: 0.95rem;
+  color: #555;
+  padding: 10px 0;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.vehicle-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.vehicle-actions button {
+  flex: 1 1 45%;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 6px;
+  background: #e5e5e5;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.vehicle-actions button:hover {
+  background: #ccc;
+}
+
+.vehicle-actions .primary {
+  background: #0a7f44;
+  color: #fff;
+}
+
+.vehicle-actions .primary:hover {
+  background: #075d32;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .vehicle-detail {
+    flex-direction: column;
+  }
+
+  .vehicle-actions button {
+    flex: 1 1 100%;
+  }
+}
