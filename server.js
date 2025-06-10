@@ -15,10 +15,37 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/index")
 const errorHandler = require("./utilities/errorHandler")
+const session = require('express-session')
+const pool = require('./database/')
+const accountRoute = require('./routes/accountRoute');
+const bodyParser = require('body-parser')
 
 
+/* ***********************
+ * Middleware
+ *************************/
+app.use(session({
+  store: new (require('connect-pg-simple')(session))({
+    createTableIfMissing: true,
+    pool,
+  }),
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+  name: 'sessionId',
+  }
+))
 
+//  Express Messages Middleware
+app.use(require('connect-flash')())
+app.use(function(req, res, next){
+  res.locals.messages = require('express-messages')(req, res)
+  next()
+})
 
+// Body Parser Middleware
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 /* ***********************
  * View Engine and Templates
@@ -34,9 +61,6 @@ app.set("layout", "layouts/layout") // not as views root
  *************************/
 app.use('/',static) // Static files middleware
 
-
-
-
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 
@@ -44,27 +68,13 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
 
 app.set("view engine", "ejs");
-// app.set("views", path.join(__dirname, "views"));
+
+// Account routes
+app.use("/account", accountRoute)
 
 //  Views Directory routes
 app.get("/", (req, res) => {
   res.render("index", { title: "Welcome to My Website" });
-});
-
-app.get("/custom", (req, res) => {
-  res.render("custom", { title: "Custom Page" });
-});
-
-app.get("/sedan", (req, res) => {
-  res.render("sedan", { title: "Sedan Page" });
-});
-
-app.get("/suv", (req, res) => {
-  res.render("suv", { title: "SUV Page" });
-});
-
-app.get("/truck", (req, res) => {
-  res.render("truck", { title: "Truck Page" });
 });
 
 // File Not Found Route - must be last route in list
@@ -92,3 +102,7 @@ const host = process.env.HOST
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
+
+app.use((req, res, next) => {
+    res.status(404).send(`Route not found: ${req.method} ${req.originalUrl}`);
+});

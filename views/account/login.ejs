@@ -1,0 +1,49 @@
+
+<main class="container">
+  <%- include('../partials/head') %>
+  <%- include('../partials/navigation') %>
+
+  <h1><%= title %></h1>
+
+  <% if (notice) { %>
+    <div class="notice"><%= notice %></div>
+  <% } %>
+
+  <div class="login-form-container">
+    <form action="/account/login" method="post">
+      
+      <!-- Email Input -->
+      <label for="account_email">Email:</label>
+      <input 
+        type="email" 
+        id="account_email" 
+        name="account_email" 
+        required
+      >
+
+      <!-- Password Input + Reminder -->
+      <label for="account_password">Password:</label>
+      
+      <div class = "criteria" style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #faf8f8;">
+        Passwords must be at least <strong>12 characters</strong> and contain 
+        <strong>1 uppercase letter</strong>, <strong>1 number</strong>, and 
+        <strong>1 special character</strong>.
+      </div>
+
+      <input 
+        type="password" 
+        id="account_password" 
+        name="account_password" 
+        required 
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+      >
+
+      <button type="submit">LOGIN</button>
+    </form>
+
+    <div class="signup-link">
+      No account? <a href="/account/register">Sign-up</a>
+    </div>
+  </div>
+
+</main>

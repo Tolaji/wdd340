@@ -1,0 +1,94 @@
+<main class="container">
+  <%- include('../partials/head') %>
+  <%- include('../partials/navigation') %>
+
+  <title><%= title %></title>
+  <h1><%= title %></h1>
+
+  <% if (errors && typeof errors.array === 'function' && errors.array().length > 0) { %>
+      <div class="notice">
+        <% if (notice) { %>
+          <%= notice %>
+        <% } %>
+
+        <% if (typeof errors !== 'undefined' && errors.array().length > 0) { %>
+          <ul>
+            <% errors.array().forEach(error => { %>
+              <li><%= error.msg %></li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+    <% } %>
+
+
+  <div class="register-form-container">
+    <p>All fields are required</p>
+    <form action="/account/register" method="post">
+      <label for="account_firstname">First Name:</label>
+      <input 
+        type="text" 
+        id="account_firstname" 
+        name="account_firstname" 
+        required 
+        value="<%= typeof formData !== 'undefined' ? formData.account_firstname : '' %>">
+
+      <label for="account_lastname">Last Name:</label>
+      <input 
+        type="text" 
+        id="account_lastname" 
+        name="account_lastname" 
+        required 
+        value="<%= typeof formData !== 'undefined' ? formData.account_lastname : '' %>">
+
+      <label for="account_email">Email Address:</label>
+      <input 
+        type="email" 
+        id="account_email" 
+        name="account_email" 
+        required 
+        value="<%= typeof formData !== 'undefined' ? formData.account_email : '' %>">
+
+      <!-- <label for="account_password">Password:</label>
+      <input 
+        type="password" 
+        id="account_password" 
+        name="account_password" 
+        required> -->
+      <label for="account_password">Password:</label>
+
+        <div class="criteria" style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #faf8f8;">
+          Passwords must be at least <strong>12 characters</strong> long and contain at least 
+          <strong>1 uppercase letter</strong>, <strong>1 number</strong>, and 
+          <strong>1 special character</strong>.
+        </div>
+
+        <input 
+          type="password" 
+          id="account_password" 
+          name="account_password" 
+          required 
+          pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+        >
+
+        <div style="width: 90%; margin-bottom: 1rem; text-align: left;">
+          <input type="checkbox" id="togglePassword">
+          <label for="togglePassword">Show Password</label>
+        </div>
+
+      <button type="submit">REGISTER</button>
+    </form>
+
+    <div class="signup-link">
+      Already have an account? <a href="/account/login">Login</a>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('togglePassword');
+    const password = document.getElementById('account_password');
+    toggle.addEventListener('change', () => {
+      password.type = toggle.checked ? 'text' : 'password';
+    });
+  </script>
+</main>
