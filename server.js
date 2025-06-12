@@ -20,7 +20,6 @@ const pool = require('./database/')
 const accountRoute = require('./routes/accountRoute');
 const bodyParser = require('body-parser')
 
-
 /* ***********************
  * Middleware
  *************************/
@@ -67,15 +66,8 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 // Inventory routes
 app.use("/inv", inventoryRoute)
 
-app.set("view engine", "ejs");
-
 // Account routes
 app.use("/account", accountRoute)
-
-//  Views Directory routes
-app.get("/", (req, res) => {
-  res.render("index", { title: "Welcome to My Website" });
-});
 
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {

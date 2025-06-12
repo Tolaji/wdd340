@@ -1,0 +1,20 @@
+<main class="container">
+  <%- include('../partials/head') %>
+  <%- include('../partials/navigation') %>
+
+  <h1>Inventory Management</h1>
+
+  <% if (Array.isArray(messages) && messages.length > 0) { %>
+    <div class="notice">
+      <% messages.forEach(msg => { %>
+        <p><%= msg %></p>
+      <% }) %>
+    </div>
+  <% } %>
+
+
+  <ul class="inv-links">
+    <li><a href="/inv/add-classification">Add New Classification</a></li>
+    <li><a href="/inv/add-inventory">Add New Inventory Item</a></li>
+  </ul>
+</main>

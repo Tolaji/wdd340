@@ -1,0 +1,26 @@
+<main class="container">
+  <%- include('../partials/head') %>
+  <%- include('../partials/navigation') %>
+
+  <h1>Add New Classification</h1>
+
+  <% if (messages && messages.length > 0) { %>
+    <div class="notice">
+      <% messages.forEach(msg => { %>
+        <p><%= msg %></p>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <form action="/inv/add-classification" method="POST">
+    <label for="classification_name">Classification Name (no spaces or special characters):</label>
+    <input 
+      type="text" 
+      id="classification_name" 
+      name="classification_name"
+      pattern="^[a-zA-Z0-9]+$"
+      required
+    >
+    <button type="submit">Add Classification</button>
+  </form>
+</main>

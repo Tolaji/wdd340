@@ -1,6 +1,7 @@
 const utilities = require('../utilities/index');
 const accountModel = require('../models/account-model');
-// const bcrypt = require("bcrypt");
+const { validationResult } = require("express-validator");
+const bcrypt = require("bcrypt");
 const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$/;
 
 
@@ -8,15 +9,16 @@ const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\
 /* ****************************************
 *  Deliver login view
 * *************************************** */
-async function buildLogin(req, res, next) {
-  let nav = await utilities.getNav()
+const buildLogin = async function (req, res) {
+  const nav = await utilities.getNav();
   res.render("account/login", {
     title: "Login",
     nav,
-    notice: req.flash('notice'),
-    error: req.flash('error'),
-  })
-}
+    errors: null,
+    notice: null,
+    formData: {} // for value repopulation
+  });
+};
 
 /* ****************************************
 *  Deliver registration view
@@ -101,48 +103,57 @@ async function registerAccount(req, res) {
 async function loginAccount(req, res) {
   const nav = await utilities.getNav();
   const { account_email, account_password } = req.body;
-  const errors = [];
 
-  // Basic validation
-  if (!account_email || !account_password) {
-    errors.push("Both email and password are required.");
-  }
-
-  // Email validation
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(account_email)) {
-    errors.push("A valid email address is required.");
-  }
-
-  // Password strength validation
-  if (!passwordPattern.test(account_password)) {
-    errors.push("Invalid password format.");
-  }
-
-  if (errors.length > 0) {
-    req.flash("notice", errors.join(" "));
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
     return res.status(400).render("account/login", {
       title: "Login",
       nav,
-      notice: req.flash("notice")
+      errors, // Pass express-validator errors
+      notice: null,
+      formData: { account_email } // Repopulate email input
     });
   }
 
-  // Lookup & compare password with DB hash here
-  // const account = await accountModel.getAccountByEmail(account_email);
-  // const passwordMatch = await bcrypt.compare(account_password, account.account_password);
+  try {
+    const account = await accountModel.getAccountByEmail(account_email);
+    if (!account) {
+      req.flash("notice", "Email not found.");
+      return res.status(401).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        notice: req.flash("notice"),
+        formData: { account_email }
+      });
+    }
 
-  // if (!account || !passwordMatch) {
-  //   req.flash("notice", "Invalid credentials.");
-  //   return res.status(401).render("account/login", {
-  //     title: "Login",
-  //     nav,
-  //     notice: req.flash("notice")
-  //   });
-  // }
+    const passwordMatch = await bcrypt.compare(account_password, account.account_password);
+    if (!passwordMatch) {
+      req.flash("notice", "Incorrect password.");
+      return res.status(401).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        notice: req.flash("notice"),
+        formData: { account_email }
+      });
+    }
 
-  // req.session.user = account;
-  // res.redirect("/account/dashboard");
+    req.session.user = account;
+    res.redirect("/account/dashboard");
+
+  } catch (err) {
+    console.error("Login error:", err);
+    req.flash("notice", "An error occurred. Please try again.");
+    return res.status(500).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+      notice: req.flash("notice"),
+      formData: { account_email }
+    });
+  }
 }
 
 

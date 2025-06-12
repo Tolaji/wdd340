@@ -1,16 +1,29 @@
-
 <main class="container">
   <%- include('../partials/head') %>
   <%- include('../partials/navigation') %>
 
   <h1><%= title %></h1>
 
-  <% if (notice) { %>
-    <div class="notice"><%= notice %></div>
-  <% } %>
+  <% const validationErrors = (errors && typeof errors.array === 'function') ? errors : { array: () => [] }; %>
+
+    <% if (validationErrors.array().length > 0) { %>
+      <div class="notice">
+        <% if (notice) { %>
+          <%= notice %>
+        <% } %>
+        <ul>
+          <% validationErrors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+          <% }) %>
+        </ul>
+      </div>
+    <% } else if (notice) { %>
+      <div class="notice"><%= notice %></div>
+    <% } %>
+
 
   <div class="login-form-container">
-    <form action="/account/login" method="post">
+    <form id="loginForm" action="/account/login" method="post">
       
       <!-- Email Input -->
       <label for="account_email">Email:</label>
@@ -19,12 +32,12 @@
         id="account_email" 
         name="account_email" 
         required
+        value="<%= typeof formData !== 'undefined' ? formData.account_email : '' %>"
       >
 
       <!-- Password Input + Reminder -->
       <label for="account_password">Password:</label>
-      
-      <div class = "criteria" style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #faf8f8;">
+      <div class="criteria" style="font-size: 0.9rem; margin-bottom: 0.5rem; color: #faf8f8;">
         Passwords must be at least <strong>12 characters</strong> and contain 
         <strong>1 uppercase letter</strong>, <strong>1 number</strong>, and 
         <strong>1 special character</strong>.
@@ -35,7 +48,7 @@
         id="account_password" 
         name="account_password" 
         required 
-        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+        pattern="^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\\s).{12,}$"
       >
 
       <button type="submit">LOGIN</button>
@@ -45,5 +58,4 @@
       No account? <a href="/account/register">Sign-up</a>
     </div>
   </div>
-
 </main>
