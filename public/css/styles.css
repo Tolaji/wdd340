@@ -306,7 +306,7 @@ footer {
 
   /* Footer stack */
   footer {
-    flex-direction: column;
+    /* flex-direction: column; */
     align-items: flex-start;
     padding: 10px 15px;
     gap: 10px;

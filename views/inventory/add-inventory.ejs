@@ -12,7 +12,7 @@
     </div>
   <% } %>
 
-  <form action="/inv/add-inventory" method="post">
+  <form class="management-forms-container" action="/inv/add-inventory" method="post">
     <label for="inv_make">Make</label>
     <input type="text" id="inv_make" name="inv_make" value="<%= typeof inv_make != 'undefined' ? inv_make : '' %>" required />
 
