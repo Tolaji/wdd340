@@ -13,34 +13,41 @@
 <% } %>
 
 
-  <form class="management-forms-container" action="/inv/update" method="post">
+  <form class="management-forms-container" id="updateForm" action="/inv/update" method="post">
     <label for="inv_make">Make</label>
-    <input type="text" id="inv_make" name="inv_make" value="<%= typeof inv_make != 'undefined' ? inv_make : '' %>" required />
+    <input type="text" id="inv_make" name="inv_make" value="<%= typeof inv_make !== 'undefined' ? inv_make : '' %>" required />
 
     <label for="inv_model">Model</label>
-    <input type="text" id="inv_model" name="inv_model" value="<%= typeof inv_model != 'undefined' ? inv_model : '' %>" required />
+    <input type="text" id="inv_model" name="inv_model" value="<%= typeof inv_model !== 'undefined' ? inv_model : '' %>" required />
 
     <label for="inv_description">Description</label>
-    <textarea id="inv_description" name="inv_description" required><%= typeof inv_description != 'undefined' ? inv_description : '' %></textarea>
+    <textarea id="inv_description" name="inv_description" required><%= typeof inv_description !== 'undefined' ? inv_description : '' %></textarea>
 
     <label for="inv_price">Price</label>
-    <input type="number" id="inv_price" name="inv_price" step="0.01" value="<%= typeof inv_price != 'undefined' ? inv_price : '' %>" required />
+    <input type="number" id="inv_price" name="inv_price" step="0.01" value="<%= typeof inv_price !== 'undefined' ? inv_price : '' %>" required />
 
     <label for="inv_year">Year</label>
-    <input type="number" id="inv_year" name="inv_year" value="<%= typeof inv_year != 'undefined' ? inv_year : '' %>" required />
+    <input type="number" id="inv_year" name="inv_year" value="<%= typeof inv_year !== 'undefined' ? inv_year : '' %>" required />
+
+    <label for="inv_miles">Mileage</label>
+    <input type="number" id="inv_miles" name="inv_miles" value="<%= typeof inv_miles !== 'undefined' ? inv_miles : '' %>" required />
+
+    <label for="inv_color">Color</label>
+    <input type="text" id="inv_color" name="inv_color" value="<%= typeof inv_color !== 'undefined' ? inv_color : '' %>" required />
 
     <label for="inv_image">Image Path</label>
-    <input type="text" id="inv_image" name="inv_image" value="<%= inv_image %>" required />
+    <input type="text" id="inv_image" name="inv_image" value="<%= typeof inv_image !== 'undefined' ? inv_image : '/images/vehicles/no-image.png' %>" required />
 
     <label for="inv_thumbnail">Thumbnail Path</label>
-    <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="<%= inv_image %>" required />
+    <input type="text" id="inv_thumbnail" name="inv_thumbnail" value="<%= typeof inv_thumbnail !== 'undefined' ? inv_thumbnail : '/images/vehicles/no-image.png' %>" required />
 
     <label for="classificationList">Classification</label>
     <div class="select-wrapper">
       <%- classificationList %>
     </div>
 
-    <button type="submit">Update Vehicle</button>
+    <button type="submit" disabled>Update Vehicle</button>
+
     <input type="hidden" name="inv_id"
     <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
     <% } %>>
