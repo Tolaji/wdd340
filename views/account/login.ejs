@@ -3,6 +3,7 @@
   <%- include('../partials/navigation') %>
 
   <h1><%= title %></h1>
+  <%- messages() %>
 
   <% const validationErrors = (errors && typeof errors.array === 'function') ? errors : { array: () => [] }; %>
 

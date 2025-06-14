@@ -13,8 +13,31 @@
   <% } %>
 
 
-  <ul class="management-forms-container" class="inv-links">
+  <ul class="management-forms-container inv-links">
     <li><a href="/inv/add-classification">Add New Classification</a></li>
     <li><a href="/inv/add-inventory">Add New Inventory Item</a></li>
   </ul>
+
+
+  <h2>Manage Inventory</h2>
+
+  <div class="management-forms-container inv-links">
+      <p>Choose a classification to see the vehicles in inventory.</p>
+
+      <!-- Inject classification dropdown -->
+      <div class="inv-links">
+          <%- classificationList %>
+      </div>
+      
+
+      <!-- Inventory display table -->
+      <table id="inventoryDisplay"></table>
+  </div>
+  
+
+  <!-- Fallback for JavaScript-disabled browsers -->
+  <noscript>JavaScript must be enabled to use this page.</noscript>
+
+  <!-- Link JavaScript file -->
+  <!-- <script src="/js/inventory.js"></script> -->
 </main>

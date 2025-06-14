@@ -1,28 +1,35 @@
-/* h1 {
-  text-align: left;
-  margin-bottom: 2rem;
-  color: #222;
-} */
 
 .management-forms-container {
   max-width: 600px;
   margin: 5rem auto;
   padding: 2rem;
-  background-color: #2c3e50; /* dark blue-gray */
+  background-color: #2c3e50;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   color: white;
   font-family: Arial, sans-serif;
 }
 
-/* Form styling */
-.management-forms-container form {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  width: 100%;
-  align-items: center;
+/* Inventory Management Links */
+.management-forms-container li {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.management-forms-container li a {
+  display: block;
+  padding: 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.management-forms-container li a:hover {
+  background-color: #495057;
+  transform: scale(1.02);
 }
 
 label {
@@ -42,6 +49,12 @@ select {
   font-size: 1rem;
   transition: border-color 0.2s ease-in-out;
 }
+
+p {
+  font-weight: 600;
+  text-align: center;
+}
+
 
 input:focus,
 textarea:focus,
@@ -81,37 +94,81 @@ button[type="submit"]:hover {
   margin-bottom: 1.5rem;
 }
 
-/* Inventory management links */
-.management-forms-container li {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin: 0;
-}
-
-.management-forms-container li a {
+/* Dropdown Wrapper */
+.select-wrapper,
+.management-forms-container div select {
   display: block;
-  padding: 1rem;
-  /* background-color: #343a40; */
-  border-radius: 6px;
-  text-decoration: none;  /* removes underline */
-  color: white;           /* text color */
-  font-weight: bold;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-  cursor: pointer;        /* cursor change */
-}
-
-.management-forms-container li a:hover {
-  background-color: #495057; /* hover background */
-  transform: scale(1.02);    /* optional subtle zoom effect */
-}
-
-.management-forms-container .select-wrapper select {
+  margin: 1rem auto 2rem;
   width: 60%;
-  padding: 0.5rem;
+  padding: 0.75rem;
   font-size: 1rem;
   border-radius: 6px;
   border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  color: #333;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.2s ease-in-out;
 }
+
+.select-wrapper select:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+/* Table */
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background-color: white;
+  color: black;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+/* #inventoryDisplay th {
+  background-color: #007bff;
+  color: white;
+} */
+
+/* Notice Styling */
+.notice {
+  padding: 1rem;
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .management-forms-container {
+    margin: 0;
+  }
+
+  .notice {
+  color: #856404;
+  border-radius: 6px;
+  font-size: 1rem;
+  }
+
+  #inventoryDisplay {
+    font-size: 0.8rem;
+  }
+
+  .management-forms-container div select {
+    width: 90%;
+  }
+}
+
+
+
+

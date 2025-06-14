@@ -10,6 +10,16 @@
   font-family: Arial, sans-serif;
   }
 
+  .notice {
+    /* padding: 1rem; */
+    /* background-color: #fff3cd; */
+    color: #856404;
+    /* border: 1px solid #ffeeba; */
+    border-radius: 6px;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+  }
+
 .login-form-container form {
   display: flex;
   flex-direction: column;
@@ -79,4 +89,9 @@
 
 .login-form-container .signup-link a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  
+
 }

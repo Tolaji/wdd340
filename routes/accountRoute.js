@@ -18,7 +18,8 @@ router.post('/register', regValidate.registrationRules(), regValidate.checkRegDa
 // Process the login form submission
 router.post('/login', regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin));
 
-router.get("/", utilities.checkJWTToken, utilities.handleErrors(accountController.buildAccount));
+// Process the account management view
+router.get("/", utilities.checkJWTToken, utilities.checkLogin, utilities.handleErrors(accountController.buildAccount));
 
 
 // Export the router to be used in server.js
