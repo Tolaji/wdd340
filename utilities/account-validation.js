@@ -4,6 +4,23 @@ const validate = {};
 const accountModel = require("../models/account-model");
 const { check } = require("express-validator");
 
+// 🔐 Reusable strong password validation rule
+const passwordValidationRule = () => {
+  return body("account_password")
+    .trim()
+    .notEmpty()
+    .withMessage("Password is required.")
+    .isStrongPassword({
+      minLength: 12,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
+    })
+    .withMessage("Password must be at least 12 characters long and include 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.");
+};
+
+
 /*  **********************************
 *  Registration Data Validation Rules
 * ********************************* */
@@ -39,19 +56,9 @@ return [
     }),
 
     // password is required and must be strong password
-    body("account_password")
-    .trim()
-    .notEmpty()
-    .isStrongPassword({
-        minLength: 12,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-    })
-    .withMessage("Password does not meet requirements."),
-]
-}
+    passwordValidationRule(),
+];
+};
 
 /* ******************************
 * Check data and return errors or continue to registration
@@ -93,18 +100,7 @@ validate.loginRules = () => {
       .normalizeEmail()
       .withMessage("Invalid email format."),
     
-    body("account_password")
-      .trim()
-      .notEmpty()
-      .withMessage("Please enter your password.")
-      .isStrongPassword({
-        minLength: 12,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1
-      })
-      .withMessage("Password does not meet requirements."),
+    passwordValidationRule(),
   ];
 };
 
@@ -129,5 +125,56 @@ validate.checkLoginData = async (req, res, next) => {
 
   next();
 };
+
+// Update Account Rules
+validate.updateAccountRules = () => {
+  return [
+    body("account_firstname").trim().notEmpty().withMessage("First name is required."),
+    body("account_lastname").trim().notEmpty().withMessage("Last name is required."),
+    body("account_email").trim().isEmail().withMessage("Valid email required.")
+      .custom(async (email, { req }) => {
+        const account = await accountModel.getAccountByEmail(email);
+        if (account && account.account_id != req.body.account_id) {
+          throw new Error("Email already in use.");
+        }
+      }),
+  ];
+};
+
+validate.checkUpdateAccountData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav();
+    return res.render("account/update", {
+      title: "Update Account",
+      nav,
+      errors,
+      formData: req.body,
+    });
+  }
+  next();
+};
+
+// Password Rules
+validate.updatePasswordRules = () => {
+  return [
+    passwordValidationRule(),
+  ];
+};
+
+validate.checkUpdatePasswordData = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav();
+    return res.render("account/update", {
+      title: "Update Account",
+      nav,
+      errors,
+      formData: req.body,
+    });
+  }
+  next();
+};
+
 
 module.exports = validate;

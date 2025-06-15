@@ -6,21 +6,54 @@ const utilities = require('../utilities/index');
 const accountController = require('../controllers/accountController');
 const regValidate = require('../utilities/account-validation');
 
-// Route for login view when "My Account" is clicked
+// LOGIN & REGISTER ROUTES
 router.get('/login', utilities.handleErrors(accountController.buildLogin));
-
-// Route for register view when "register" is clicked
 router.get('/register', utilities.handleErrors(accountController.buildRegister));
+router.post('/register',
+  regValidate.registrationRules(),
+  regValidate.checkRegData,
+  utilities.handleErrors(accountController.registerAccount)
+);
+router.post('/login',
+  regValidate.loginRules(),
+  regValidate.checkLoginData,
+  utilities.handleErrors(accountController.accountLogin)
+);
 
-// Process the registration form submission
-router.post('/register', regValidate.registrationRules(), regValidate.checkRegData, utilities.handleErrors(accountController.registerAccount));
+// DASHBOARD ROUTE
+router.get("/",
+  utilities.checkJWTToken,
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildAccount)
+);
 
-// Process the login form submission
-router.post('/login', regValidate.loginRules(), regValidate.checkLoginData, utilities.handleErrors(accountController.accountLogin));
+// ✅ LOGOUT ROUTE (TASK 6)
+router.get("/logout", (req, res) => {
+  res.clearCookie("jwt");
+  req.flash("notice", "You have successfully logged out.");
+  res.redirect("/");
+});
 
-// Process the account management view
-router.get("/", utilities.checkJWTToken, utilities.checkLogin, utilities.handleErrors(accountController.buildAccount));
+// ✅ ACCOUNT UPDATE VIEW (TASK 4)
+router.get("/update/:account_id",
+  utilities.checkJWTToken,
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildUpdateAccountView)
+);
 
+// ✅ UPDATE ACCOUNT INFO (TASK 5)
+router.post("/update/account",
+  regValidate.updateAccountRules(),
+  regValidate.checkUpdateAccountData,
+  utilities.handleErrors(accountController.updateAccount)
+);
 
-// Export the router to be used in server.js
+// ✅ UPDATE PASSWORD (TASK 5)
+router.post("/update/password",
+  regValidate.updatePasswordRules(),
+  regValidate.checkUpdatePasswordData,
+  utilities.handleErrors(accountController.updatePassword)
+);
+
+// Export router
 module.exports = router;

@@ -40,9 +40,29 @@ async function getAccountByEmail (account_email) {
   }
 }
 
+async function getAccountById(account_id) {
+  return db.oneOrNone("SELECT * FROM account WHERE account_id = $1", [account_id]);
+}
+
+async function updateAccountInfo(account_id, firstname, lastname, email) {
+  const sql = `
+    UPDATE account 
+    SET account_firstname = $1, account_lastname = $2, account_email = $3 
+    WHERE account_id = $4
+  `;
+  return db.result(sql, [firstname, lastname, email, account_id]);
+}
+
+async function updatePassword(account_id, hashedPassword) {
+  const sql = `UPDATE account SET account_password = $1 WHERE account_id = $2`;
+  return db.result(sql, [hashedPassword, account_id]);
+}
 
 module.exports = {
     registerAccount,
     checkExistingEmail,
-    getAccountByEmail
+    getAccountByEmail,
+    getAccountById,
+    updateAccountInfo,
+    updatePassword,
 };

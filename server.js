@@ -33,6 +33,12 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   name: 'sessionId',
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 3600000 // 1 hour
+  }
+
   }
 ))
 
@@ -42,6 +48,11 @@ app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+app.use((req, res, next) => {
+  res.locals.accountData = req.session.user || null;
+  next();
+});
+
 
 // Body Parser Middleware
 app.use(bodyParser.urlencoded({ extended: true }))
