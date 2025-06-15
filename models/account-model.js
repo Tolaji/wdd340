@@ -41,7 +41,8 @@ async function getAccountByEmail (account_email) {
 }
 
 async function getAccountById(account_id) {
-  return db.oneOrNone("SELECT * FROM account WHERE account_id = $1", [account_id]);
+  const result = await pool.query("SELECT * FROM account WHERE account_id = $1", [account_id]);
+  return result.rows[0] || null;
 }
 
 async function updateAccountInfo(account_id, firstname, lastname, email) {
@@ -49,14 +50,18 @@ async function updateAccountInfo(account_id, firstname, lastname, email) {
     UPDATE account 
     SET account_firstname = $1, account_lastname = $2, account_email = $3 
     WHERE account_id = $4
+    RETURNING *
   `;
-  return db.result(sql, [firstname, lastname, email, account_id]);
+  const result = await pool.query(sql, [firstname, lastname, email, account_id]);
+  return result.rows[0]; // optional: return updated account
 }
 
 async function updatePassword(account_id, hashedPassword) {
-  const sql = `UPDATE account SET account_password = $1 WHERE account_id = $2`;
-  return db.result(sql, [hashedPassword, account_id]);
+  const sql = `UPDATE account SET account_password = $1 WHERE account_id = $2 RETURNING *`;
+  const result = await pool.query(sql, [hashedPassword, account_id]);
+  return result.rows[0]; // optional: return updated account
 }
+
 
 module.exports = {
     registerAccount,
