@@ -1,0 +1,21 @@
+<main class="container">
+  <%- include('../partials/head') %>
+  <%- include('../partials/navigation') %>
+
+  <h1><%= title %></h1>
+
+  <div class="management-forms-container">
+    <% if (feedback) { %>
+        <form action="/feedback/update/<%= feedback.feedback_id %>" method="POST">
+        <div>
+            <label for="response_text">Edit Admin Response:</label><br>
+            <textarea id="response_text" name="response_text" rows="5" required><%= feedback.admin_response %></textarea>
+        </div>
+        <button type="submit">Update Response</button>
+        </form>
+    <% } else { %>
+        <p>No feedback found to edit.</p>
+    <% } %>
+  </div>
+  
+</main>

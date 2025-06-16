@@ -1,0 +1,57 @@
+<main class="container">
+  <%- include('../partials/head') %>
+  <%- include('../partials/navigation') %>
+
+  <h1><%= title %></h1>
+  <div class="management-forms-container">
+    <% if (feedbackList && feedbackList.length > 0) { %>
+        <ul class="feedback-list">
+        <% feedbackList.forEach(feedback => { %>
+            <li class="feedback-item">
+            <p>
+                <strong><%= feedback.account_firstname || "Anonymous" %> <%= feedback.account_lastname || "" %></strong>: 
+                <%= feedback.feedback_text %>
+                <em>(<%= new Date(feedback.feedback_date).toLocaleString() %>)</em>
+            </p>
+
+            <% if (feedback.admin_response) { %>
+                <p class="admin-response"><strong>Admin Response:</strong> <%= feedback.admin_response %></p>
+                <p><em>Responded on: <%= new Date(feedback.response_date).toLocaleString() %></em></p>
+                <p><strong>Status:</strong> 
+                    <span class="status <%= feedback.status.toLowerCase() %>">
+                        <%= feedback.status %>
+                    </span>
+                </p>
+
+
+            <% } else { %>
+                <!-- Admin Response Form -->
+                <div class="admin-actions">
+                    <% if (!feedback.admin_response) { %>
+                        <form action="/feedback/respond/<%= feedback.feedback_id %>" method="POST" class="admin-response-form">
+                        <textarea name="response_text" placeholder="Write admin response..." required></textarea>
+                        <button type="submit">Submit Response</button>
+                        </form>
+                    <% } %>
+
+                    <form action="/feedback/edit/<%= feedback.feedback_id %>" method="GET">
+                        <button type="submit">Edit Response</button>
+                    </form>
+
+                    <form action="/feedback/delete/<%= feedback.feedback_id %>" method="POST" onsubmit="return confirm('Are you sure?')">
+                        <button type="submit">Delete Response</button>
+                    </form>
+                </div>
+
+
+            <% } %>
+            </li>
+        <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No feedback available.</p>
+    <% } %>
+  </div>
+
+  
+</main>

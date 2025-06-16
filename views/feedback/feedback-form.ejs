@@ -1,0 +1,30 @@
+<main class="container">
+  <%- include('../partials/head') %>
+  <%- include('../partials/navigation') %>
+
+  <h1><%= title %></h1>
+
+  <div class="management-forms-container">
+    <% if (notice) { %>
+        <div class="flash-message"><%= notice %></div>
+    <% } %>
+
+    <% if (errors && errors.length > 0) { %>
+        <ul class="error-messages">
+        <% errors.forEach(function(error) { %>
+            <li><%= error %></li>
+        <% }) %>
+        </ul>
+    <% } %>
+
+    <form action="/feedback" method="POST">
+        <textarea name="feedback_text" placeholder="Let us know your thoughts!" required></textarea>
+        <button type="submit">Submit Feedback</button>
+    </form>
+
+
+
+  </div>
+
+  
+</main>

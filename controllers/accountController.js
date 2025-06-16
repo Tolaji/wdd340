@@ -13,11 +13,12 @@ const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\
 * *************************************** */
 const buildLogin = async function (req, res) {
   const nav = await utilities.getNav();
+  const notice = req.flash("notice");
   res.render("account/login", {
     title: "Login",
     nav,
     errors: { array: () => [] },
-    notice: null,
+    notice,
     formData: {} // for value repopulation
   });
 };

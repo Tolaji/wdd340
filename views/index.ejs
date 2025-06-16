@@ -50,6 +50,14 @@
         <li>"The most futuristic ride of our day." (4.5/5)</li>
         <li>"80’s livin and I love it!" (5/5)</li>
       </ul>
+
+      <div>
+        <li><a href="/feedback">Give Feedback</a></li>
+        <% if (accountData && (accountData.account_type === 'Admin' || accountData.account_type === 'Employee')) { %>
+          <li><a href="/account/manage">Account Management</a></li>
+          <li><a href="/feedback/all">View Feedback (Admin)</a></li>
+        <% } %>
+      </div>
     </section>
 
   </div>
