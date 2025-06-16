@@ -51,11 +51,13 @@
         <li>"80’s livin and I love it!" (5/5)</li>
       </ul>
 
-      <div>
-        <li><a href="/feedback">Give Feedback</a></li>
+      <div class="roles-link">
+        <ul>
+          <li><a href="/feedback">Give Feedback</a></li>
         <% if (accountData && (accountData.account_type === 'Admin' || accountData.account_type === 'Employee')) { %>
           <li><a href="/account/">Account Management</a></li>
-          <li><a href="/feedback/all">View Feedback (Admin)</a></li>
+          <li><a href="/feedback/all">View Feedback</a></li>
+        </ul>
         <% } %>
       </div>
     </section>

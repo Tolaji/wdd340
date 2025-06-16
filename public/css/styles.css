@@ -216,6 +216,34 @@ body {
   font-size: 0.95rem;
 }
 
+.roles-link ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row; /* Horizontal by default (desktop) */
+  gap: 1rem; /* spacing between items */
+}
+
+.roles-link li {
+  display: inline;
+}
+
+.roles-link a {
+  text-decoration: none;
+  color: rgb(8, 8, 8);
+  font-weight: bold;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.roles-link a:hover {
+  color: #06b80f;
+}
+
+
+
+
 footer {
   display: flex;
   justify-content: space-between;
@@ -337,6 +365,11 @@ footer {
   /* Upgrade grid becomes single column */
   .upgrade-grid {
     grid-template-columns: 1fr;
+  }
+
+  .roles-link ul {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   /* Footer stack */
