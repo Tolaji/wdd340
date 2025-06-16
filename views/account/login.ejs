@@ -7,20 +7,15 @@
 
   <% const validationErrors = (errors && typeof errors.array === 'function') ? errors : { array: () => [] }; %>
 
-    <% if (validationErrors.array().length > 0) { %>
-      <div class="notice">
-        <% if (notice) { %>
-          <%= notice %>
-        <% } %>
-        <ul>
-          <% validationErrors.array().forEach(error => { %>
-            <li><%= error.msg %></li>
-          <% }) %>
-        </ul>
-      </div>
-    <% } else if (notice) { %>
-      <div class="notice"><%= notice %></div>
-    <% } %>
+  <% if (validationErrors.array().length > 0) { %>
+    <div class="notice">
+      <ul>
+        <% validationErrors.array().forEach(error => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    </div>
+  <% } %>      
 
 
   <div class="login-form-container">
