@@ -11,22 +11,27 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "body-parser": "^2.2.0",
+    "body-parser": "^2.4.0",
     "connect-flash": "^0.1.1",
     "connect-pg-simple": "^10.0.0",
     "cookie-parser": "^1.4.7",
-    "dotenv": "^16.0.3",
+    "dotenv": "^16.6.1",
     "ejs": "^3.1.10",
-    "express": "^4.18.2",
+    "express": "^4.22.3",
     "express-ejs-layouts": "^2.5.1",
     "express-messages": "^1.0.1",
-    "express-session": "^1.18.1",
-    "express-validator": "^7.2.1",
-    "jsonwebtoken": "^9.0.2",
-    "pg": "^8.8.0"
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.14"
   },
-  "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
+  "packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971",
+  "pnpm": {
+    "overrides": {
+      "minimatch": ">=11.0.1"
+    }
+  }
 }

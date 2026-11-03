@@ -27,6 +27,9 @@ const feedbackRoute = require("./routes/feedbackRoute");
 /* ***********************
  * Middleware
  *************************/
+// Static files first so assets never depend on the session store / database
+app.use('/', static)
+
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableIfMissing: true,
@@ -75,8 +78,6 @@ app.use(utilities.checkJWTToken);
 /* ***********************
 * Routes
  *************************/
-app.use('/',static) // Static files middleware
-
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 

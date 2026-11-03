@@ -2,6 +2,8 @@
 const utilities = require("./index")
 
 const errorHandler = async (err, req, res, next) => {
+  if (res.headersSent) return next(err)
+
   let nav
   try {
     nav = await utilities.getNav()
